@@ -125,4 +125,20 @@ def export_clips(testset: str = "broadcast-spont-v1", out_dir: str | None = None
     return out
 
 
-BUILDERS = {"cv25-test": build_cv25, "broadcast-spont-v1": build_broadcast}
+def fetch_broadcast(force_reselect: bool = False) -> None:
+    """Список фрагментов в репозитории — источник истины: к нему привязаны расшифровки.
+    Обычная сборка только докачивает нужные записи. Заново выбирать фрагменты
+    (BASHBENCH_RESELECT=1) нужно лишь при выпуске новой версии набора."""
+    out = TESTSETS / "broadcast-spont-v1" / "data.jsonl"
+    if force_reselect or os.environ.get("BASHBENCH_RESELECT") or not out.exists():
+        return build_broadcast()
+    repo, rev, _ = SOURCES["broadcast"]
+    prefix = f"hf/{repo}/{rev}/"
+    files = sorted({r["audio"] for r in read_jsonl(out)})
+    for rel in files:
+        assert rel.startswith(prefix), rel
+        hf_file(repo, rev, rel[len(prefix):])
+    print(f"broadcast-spont-v1: аудио на месте ({len(files)} записей)")
+
+
+BUILDERS = {"cv25-test": build_cv25, "broadcast-spont-v1": fetch_broadcast}
