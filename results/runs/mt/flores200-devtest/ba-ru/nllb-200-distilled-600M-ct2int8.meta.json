@@ -1,0 +1,14 @@
+{
+  "system": {
+    "name": "nllb-200-distilled-600M-ct2int8",
+    "model": "facebook/nllb-200-distilled-600M",
+    "beams": 4,
+    "runtime": "ctranslate2 int8"
+  },
+  "testset": "flores200-devtest",
+  "task": "ba-ru",
+  "testset_sha": "7f484b6ba4f5b950",
+  "bashbench_rev": "cefe3a0",
+  "started": "2026-10-27T11:14:48+00:00",
+  "finished": "2026-10-27T11:15:33+00:00"
+}

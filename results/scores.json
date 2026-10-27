@@ -1,0 +1,97 @@
+{
+  "llm/orth-pairs-v1/choice": {
+    "goldfish-bak": {
+      "all": {
+        "metric": "accuracy",
+        "value": 100.0,
+        "ci_low": 100.0,
+        "ci_high": 100.0,
+        "n": 1000
+      },
+      "letters": {
+        "metric": "accuracy",
+        "value": 100.0,
+        "ci_low": 100.0,
+        "ci_high": 100.0,
+        "n": 500
+      },
+      "harmony": {
+        "metric": "accuracy",
+        "value": 100.0,
+        "ci_low": 100.0,
+        "ci_high": 100.0,
+        "n": 500
+      },
+      "method": "logprob"
+    }
+  },
+  "mt/flores200-devtest/ba-ru": {
+    "nllb-200-distilled-600M-ct2int8": {
+      "chrF++": {
+        "metric": "chrF++",
+        "value": 48.710408883808206,
+        "ci_low": 46.325104617537306,
+        "ci_high": 50.94911984032452,
+        "n": 128
+      },
+      "BLEU": {
+        "metric": "BLEU",
+        "value": 22.378208569563775,
+        "ci_low": 19.624290933269624,
+        "ci_high": 24.84483063874447,
+        "n": 128
+      },
+      "partial": "128 из 1012"
+    }
+  },
+  "mt/phrasebook-v1/ba-ru": {
+    "nllb-200-distilled-600M": {
+      "chrF++": {
+        "metric": "chrF++",
+        "value": 62.07908096393625,
+        "ci_low": 60.58177924747572,
+        "ci_high": 63.68479083072096,
+        "n": 1244
+      },
+      "BLEU": {
+        "metric": "BLEU",
+        "value": 39.06537892053072,
+        "ci_low": 36.80048308357652,
+        "ci_high": 41.31497757917993,
+        "n": 1244
+      },
+      "chrF++_clean": {
+        "metric": "chrF++",
+        "value": 61.949693454404375,
+        "ci_low": 60.29089513699762,
+        "ci_high": 63.5071794262018,
+        "n": 1122
+      }
+    }
+  },
+  "mt/phrasebook-v1/ru-ba": {
+    "nllb-200-distilled-600M": {
+      "chrF++": {
+        "metric": "chrF++",
+        "value": 57.16075085864786,
+        "ci_low": 55.71466150474561,
+        "ci_high": 58.65630512357774,
+        "n": 1244
+      },
+      "BLEU": {
+        "metric": "BLEU",
+        "value": 28.73289427356441,
+        "ci_low": 26.66381060636143,
+        "ci_high": 30.8373617465642,
+        "n": 1244
+      },
+      "chrF++_clean": {
+        "metric": "chrF++",
+        "value": 57.11429465263203,
+        "ci_low": 55.59785358967294,
+        "ci_high": 58.708453477639836,
+        "n": 1106
+      }
+    }
+  }
+}

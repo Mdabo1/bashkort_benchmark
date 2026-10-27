@@ -1,0 +1,14 @@
+{
+  "system": {
+    "name": "nllb-200-distilled-600M",
+    "model": "facebook/nllb-200-distilled-600M",
+    "beams": 4,
+    "device": "cpu"
+  },
+  "testset": "phrasebook-v1",
+  "task": "ru-ba",
+  "testset_sha": "416c7020d0f97d38",
+  "bashbench_rev": "unknown",
+  "started": "2026-10-27T10:43:48+00:00",
+  "finished": "2026-10-27T11:02:52+00:00"
+}
