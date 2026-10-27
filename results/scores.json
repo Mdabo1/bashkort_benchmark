@@ -216,6 +216,30 @@
     }
   },
   "mt/phrasebook-v1/ba-ru": {
+    "gigachat-2-max": {
+      "chrF++": {
+        "metric": "chrF++",
+        "value": 56.73002646641925,
+        "ci_low": 54.93674726502437,
+        "ci_high": 58.581717507453774,
+        "n": 1088
+      },
+      "BLEU": {
+        "metric": "BLEU",
+        "value": 31.830741285397803,
+        "ci_low": 29.480963228500983,
+        "ci_high": 34.150265729980795,
+        "n": 1088
+      },
+      "chrF++_clean": {
+        "metric": "chrF++",
+        "value": 56.76209893246747,
+        "ci_low": 54.953068230985444,
+        "ci_high": 58.588566076346076,
+        "n": 972
+      },
+      "partial": "1088 из 1244"
+    },
     "nllb-200-distilled-600M-ct2int8": {
       "chrF++": {
         "metric": "chrF++",
