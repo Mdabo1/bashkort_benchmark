@@ -4,7 +4,7 @@
 
 Пока «башкирский поддерживается» есть почти у всех, но никто не публикует, **насколько хорошо**. Этот репозиторий закрывает этот пробел.
 
-**Результаты:** [results/LEADERBOARD.md](results/LEADERBOARD.md) · **Методика:** [docs/methodology.md](docs/methodology.md) · **Разметка носителями:** [human_eval/](human_eval/)
+**Итоги на 27.10.2026:** [results/SUMMARY.md](results/SUMMARY.md) · **Все цифры:** [results/LEADERBOARD.md](results/LEADERBOARD.md) · **Методика:** [docs/methodology.md](docs/methodology.md) · **Разметка носителями:** [human_eval/](human_eval/)
 
 ## Что измеряется
 
@@ -36,7 +36,9 @@
 | Речь | `yandex-speechkit` | `YANDEX_API_KEY`, `YANDEX_FOLDER_ID`, при необходимости `YANDEX_STT_LANG` |
 | Речь | `speechmatics` | `SPEECHMATICS_API_KEY` |
 
-Адаптеры закрытых API написаны по документации, но **ещё не запускались**: ключей у автора первой версии не было. Если адаптер падает, напишите в issues или пришлите исправление.
+Проверены в работе: Яндекс Переводчик, YandexGPT, ГигаЧат (27.10.2026). Google Translate, SpeechKit, Speechmatics и Omnilingual ASR написаны по документации, но ещё не запускались. Если адаптер падает, напишите в issues или пришлите исправление.
+
+ГигаЧат: если `ngw.devices.sberbank.ru:9443` недоступен (например, из-за рубежа), получите токен на другой машине и передайте его в `GIGACHAT_ACCESS_TOKEN`. Нужен также сертификат Минцифры в `GIGACHAT_CA_BUNDLE`.
 
 ## Быстрый старт
 
