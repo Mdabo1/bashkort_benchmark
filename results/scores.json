@@ -13,6 +13,21 @@
       },
       "median_words": 54.5,
       "n": 56
+    },
+    "yandexgpt": {
+      "bashkir_letter_words": 61.151882962431046,
+      "foreign_letter_words": 5.243452964893827,
+      "non_alphabet_words": 5.243452964893827,
+      "oov_words": 41.742335879316336,
+      "latin_words": 0.06868131868131869,
+      "lang_ba": 60.71428571428571,
+      "lang_other": {
+        "tt": 10,
+        "kk": 10,
+        "ru": 2
+      },
+      "median_words": 49.0,
+      "n": 56
     }
   },
   "llm/orth-pairs-v1/choice": {
@@ -39,6 +54,58 @@
         "n": 500
       },
       "method": "logprob"
+    },
+    "yandexgpt-lite": {
+      "all": {
+        "metric": "accuracy",
+        "value": 58.099999999999994,
+        "ci_low": 55.0,
+        "ci_high": 61.2025,
+        "n": 1000
+      },
+      "letters": {
+        "metric": "accuracy",
+        "value": 63.0,
+        "ci_low": 58.8,
+        "ci_high": 67.2,
+        "n": 500
+      },
+      "harmony": {
+        "metric": "accuracy",
+        "value": 53.2,
+        "ci_low": 49.0,
+        "ci_high": 57.6,
+        "n": 500
+      },
+      "unparsed": 5,
+      "share_A": 89.3,
+      "method": "prompt"
+    },
+    "yandexgpt": {
+      "all": {
+        "metric": "accuracy",
+        "value": 71.6,
+        "ci_low": 68.6,
+        "ci_high": 74.5,
+        "n": 1000
+      },
+      "letters": {
+        "metric": "accuracy",
+        "value": 84.0,
+        "ci_low": 80.8,
+        "ci_high": 87.005,
+        "n": 500
+      },
+      "harmony": {
+        "metric": "accuracy",
+        "value": 59.199999999999996,
+        "ci_low": 54.794999999999995,
+        "ci_high": 63.205,
+        "n": 500
+      },
+      "unparsed": 5,
+      "share_A": 67.0,
+      "method": "prompt"
     }
   },
   "mt/flores200-devtest/ba-ru": {
@@ -57,6 +124,22 @@
         "ci_high": 20.296534372478998,
         "n": 1012
       }
+    },
+    "yandex-translate": {
+      "chrF++": {
+        "metric": "chrF++",
+        "value": 49.184190517974216,
+        "ci_low": 48.364217738994945,
+        "ci_high": 50.03638085703377,
+        "n": 1012
+      },
+      "BLEU": {
+        "metric": "BLEU",
+        "value": 23.095421618479342,
+        "ci_low": 22.025182163189566,
+        "ci_high": 24.19550333902544,
+        "n": 1012
+      }
     }
   },
   "mt/flores200-devtest/ru-ba": {
@@ -73,6 +156,22 @@
         "value": 15.447851945637094,
         "ci_low": 14.570283514624371,
         "ci_high": 16.365413483500102,
+        "n": 1012
+      }
+    },
+    "yandex-translate": {
+      "chrF++": {
+        "metric": "chrF++",
+        "value": 48.13549202753069,
+        "ci_low": 47.437643213056084,
+        "ci_high": 48.861534547133985,
+        "n": 1012
+      },
+      "BLEU": {
+        "metric": "BLEU",
+        "value": 17.26530219837854,
+        "ci_low": 16.361128763676355,
+        "ci_high": 18.104507661544446,
         "n": 1012
       }
     }

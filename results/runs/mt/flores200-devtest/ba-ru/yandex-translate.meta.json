@@ -1,0 +1,11 @@
+{
+  "system": {
+    "name": "yandex-translate"
+  },
+  "testset": "flores200-devtest",
+  "task": "ba-ru",
+  "testset_sha": "7f484b6ba4f5b950",
+  "bashbench_rev": "f754c62",
+  "started": "2026-10-27T11:53:09+00:00",
+  "finished": "2026-10-27T11:54:47+00:00"
+}

@@ -48,6 +48,9 @@ def score_choice(testset, rows):
         out[k] = metrics.accuracy(v).as_dict()
     if rows and rows[0].get("method") == "prompt":
         out["unparsed"] = sum(r["pred"] is None for r in rows)
+        # правильный ответ стоит на месте A ровно в половине случаев (±), так что сильный
+        # перекос к одной букве значит, что модель не различает варианты
+        out["share_A"] = 100 * sum(r["pred"] == "A" for r in rows) / len(rows)
     out["method"] = rows[0].get("method") if rows else None
     return out
 
@@ -148,11 +151,14 @@ def leaderboard(scores, human_path: Path):
         L += ["## Грамотность: минимальные пары", "",
               "Доля пар, где система выбрала правильный вариант (случайное угадывание — 50%). "
               "`letters`: башкирские буквы заменены русскими (ҡ→к, ҙ→з…); `harmony`: нарушен сингармонизм в окончании. "
-              "`logprob` — сравнение вероятностей (открытые веса), `prompt` — модель спрашивают, какой вариант верный.", "",
-              "| Система | Метод | Все | letters | harmony |", "|---|---|---|---|---|"]
+              "`logprob` — сравнение вероятностей (открытые веса), `prompt` — модель спрашивают, какой вариант верный. "
+              "«Ответов A» — доля ответов «A» при том, что правильный вариант стоит первым примерно в половине пар: "
+              "сильный перекос значит, что модель выбирает по позиции, а не по написанию.", "",
+              "| Система | Метод | Все | letters | harmony | Ответов A, % |", "|---|---|---|---|---|---|"]
         for s, m in sorted(ch.items(), key=lambda x: -x[1]["all"]["value"]):
+            share = f"{m['share_A']:.0f}" if "share_A" in m else "—"
             L.append(f"| {_name(s, m)} | {m['method']} | {_ci(m['all'])} | {_ci(m['letters']) if 'letters' in m else '—'} | "
-                     f"{_ci(m['harmony']) if 'harmony' in m else '—'} |")
+                     f"{_ci(m['harmony']) if 'harmony' in m else '—'} | {share} |")
         L.append("")
 
     gen = scores.get("llm/gen-v1/gen")

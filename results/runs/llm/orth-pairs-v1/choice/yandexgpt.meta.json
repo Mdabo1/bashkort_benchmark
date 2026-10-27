@@ -1,0 +1,14 @@
+{
+  "system": {
+    "name": "yandexgpt",
+    "model": "gpt://<folder>/yandexgpt/latest",
+    "base_url": "https://llm.api.cloud.yandex.net/v1",
+    "temperature": 0.0
+  },
+  "testset": "orth-pairs-v1",
+  "task": "choice",
+  "testset_sha": "350a0976476fe6d2",
+  "bashbench_rev": "f754c62",
+  "started": "2026-10-27T12:02:24+00:00",
+  "finished": "2026-10-27T12:12:17+00:00"
+}
