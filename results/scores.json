@@ -1,5 +1,18 @@
 {
   "llm/gen-v1/gen": {
+    "gigachat-2-max": {
+      "bashkir_letter_words": 64.65705163112888,
+      "foreign_letter_words": 0.014285714285714287,
+      "non_alphabet_words": 0.11932773109243698,
+      "oov_words": 12.182398255996695,
+      "latin_words": 0.27962673639365365,
+      "lang_ba": 94.64285714285714,
+      "lang_other": {
+        "tt": 3
+      },
+      "median_words": 94.5,
+      "n": 56
+    },
     "yandexgpt-lite": {
       "bashkir_letter_words": 78.4258116695531,
       "foreign_letter_words": 0.16672821344827446,
@@ -31,6 +44,33 @@
     }
   },
   "llm/orth-pairs-v1/choice": {
+    "gigachat-2-max": {
+      "all": {
+        "metric": "accuracy",
+        "value": 80.13392857142857,
+        "ci_low": 77.45535714285714,
+        "ci_high": 82.59207589285714,
+        "n": 896
+      },
+      "letters": {
+        "metric": "accuracy",
+        "value": 89.2,
+        "ci_low": 86.4,
+        "ci_high": 91.8,
+        "n": 500
+      },
+      "harmony": {
+        "metric": "accuracy",
+        "value": 68.68686868686868,
+        "ci_low": 64.14141414141415,
+        "ci_high": 73.23232323232324,
+        "n": 396
+      },
+      "unparsed": 3,
+      "share_A": 48.214285714285715,
+      "method": "prompt",
+      "partial": "896 из 1000"
+    },
     "goldfish-bak": {
       "all": {
         "metric": "accuracy",
