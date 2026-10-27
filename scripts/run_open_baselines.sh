@@ -6,7 +6,7 @@ B="python -m bashbench"
 
 for ts in phrasebook-v1 flores200-devtest; do
   for d in ba-ru ru-ba; do
-    $B run $ts $d nllb-200-distilled-600M
+    $B run $ts $d nllb-200-distilled-600M-ct2int8   # nllb-200-distilled-600M без int8 — на GPU
   done
 done
 

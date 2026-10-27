@@ -14,7 +14,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-models = ["torch", "transformers>=4.45", "sentencepiece", "onnx-asr[cpu,hub]>=0.12,<0.13"]
+models = ["torch", "transformers>=4.45", "sentencepiece", "ctranslate2>=4", "onnx-asr[cpu,hub]>=0.12,<0.13"]
 lid = ["fasttext-wheel"]
 dev = ["pytest"]
 

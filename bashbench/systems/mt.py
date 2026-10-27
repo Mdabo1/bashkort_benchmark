@@ -46,6 +46,44 @@ class NLLB(MTSystem):
         return {"name": self.name, "model": self.model_id, "beams": self.beams, "device": self.device}
 
 
+class NLLBCT2(MTSystem):
+    """NLLB через CTranslate2 с int8-весами: на CPU в разы быстрее transformers.
+    Модель конвертируется при первом запуске в .cache/ct2/."""
+
+    def __init__(self, model_id: str = "facebook/nllb-200-distilled-600M", beams: int = 4, batch: int = 32):
+        import os
+        import subprocess
+
+        import ctranslate2
+        from transformers import AutoTokenizer
+
+        from ..io import CACHE
+
+        self.model_id, self.beams, self.batch = model_id, beams, batch
+        self.name = model_id.split("/")[-1] + "-ct2int8"
+        path = CACHE / "ct2" / f"{model_id.split('/')[-1]}-int8"
+        if not (path / "model.bin").exists():
+            subprocess.run(["ct2-transformers-converter", "--model", model_id, "--output_dir", str(path),
+                            "--quantization", "int8", "--force"], check=True)
+        self.tok = AutoTokenizer.from_pretrained(model_id)
+        self.tr = ctranslate2.Translator(str(path), device="cpu", compute_type="int8",
+                                         intra_threads=os.cpu_count() or 4)
+
+    def translate(self, texts, src, tgt):
+        self.tok.src_lang = FLORES_CODES[src]
+        toks = [self.tok.convert_ids_to_tokens(self.tok.encode(t)) for t in texts]
+        res = self.tr.translate_batch(toks, target_prefix=[[FLORES_CODES[tgt]]] * len(toks), beam_size=self.beams,
+                                      max_batch_size=self.batch, max_decoding_length=512)
+        out = []
+        for r in res:
+            ids = self.tok.convert_tokens_to_ids(r.hypotheses[0][1:])
+            out.append(self.tok.decode(ids, skip_special_tokens=True))
+        return out
+
+    def info(self):
+        return {"name": self.name, "model": self.model_id, "beams": self.beams, "runtime": "ctranslate2 int8"}
+
+
 class YandexTranslate(MTSystem):
     """Yandex Cloud Translate API v2. Нужны YANDEX_API_KEY и YANDEX_FOLDER_ID."""
 

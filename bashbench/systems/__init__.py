@@ -27,7 +27,9 @@ def mt_system(name):
 
     table = {
         "nllb-200-distilled-600M": lambda: mt.NLLB("facebook/nllb-200-distilled-600M"),
+        "nllb-200-distilled-600M-ct2int8": lambda: mt.NLLBCT2("facebook/nllb-200-distilled-600M"),
         "nllb-200-distilled-1.3B": lambda: mt.NLLB("facebook/nllb-200-distilled-1.3B"),
+        "nllb-200-distilled-1.3B-ct2int8": lambda: mt.NLLBCT2("facebook/nllb-200-distilled-1.3B"),
         "nllb-200-3.3B": lambda: mt.NLLB("facebook/nllb-200-3.3B", batch=4),
         "yandex-translate": mt.YandexTranslate,
         "google-translate": mt.GoogleTranslate,

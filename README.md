@@ -22,6 +22,7 @@
 | Тип | Системы | Что нужно |
 |---|---|---|
 | Перевод | `nllb-200-distilled-600M`, `nllb-200-distilled-1.3B`, `nllb-200-3.3B` | ничего, скачивается с HF |
+| Перевод | `nllb-200-distilled-600M-ct2int8`, `nllb-200-distilled-1.3B-ct2int8` | то же через CTranslate2 int8: на CPU в разы быстрее |
 | Перевод | `yandex-translate` | `YANDEX_API_KEY`, `YANDEX_FOLDER_ID` |
 | Перевод | `google-translate` | `GOOGLE_API_KEY` |
 | Перевод, LLM | `gigachat-2-max`, `gigachat-2-pro` | `GIGACHAT_AUTH_KEY` (+ `GIGACHAT_CA_BUNDLE` при ошибке сертификата) |
