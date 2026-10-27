@@ -1,0 +1,14 @@
+{
+  "system": {
+    "name": "nllb-200-distilled-600M-ct2int8",
+    "model": "facebook/nllb-200-distilled-600M",
+    "beams": 4,
+    "runtime": "ctranslate2 int8"
+  },
+  "testset": "phrasebook-v1",
+  "task": "ba-ru",
+  "testset_sha": "416c7020d0f97d38",
+  "bashbench_rev": "c70fd95",
+  "started": "2026-10-27T11:24:25+00:00",
+  "finished": "2026-10-27T11:25:28+00:00"
+}
