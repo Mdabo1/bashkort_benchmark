@@ -47,10 +47,10 @@
     "gigachat-2-max": {
       "all": {
         "metric": "accuracy",
-        "value": 80.13392857142857,
-        "ci_low": 77.45535714285714,
-        "ci_high": 82.59207589285714,
-        "n": 896
+        "value": 78.8,
+        "ci_low": 76.2975,
+        "ci_high": 81.3025,
+        "n": 1000
       },
       "letters": {
         "metric": "accuracy",
@@ -61,15 +61,14 @@
       },
       "harmony": {
         "metric": "accuracy",
-        "value": 68.68686868686868,
-        "ci_low": 64.14141414141415,
-        "ci_high": 73.23232323232324,
-        "n": 396
+        "value": 68.4,
+        "ci_low": 64.4,
+        "ci_high": 72.4,
+        "n": 500
       },
       "unparsed": 3,
-      "share_A": 48.214285714285715,
-      "method": "prompt",
-      "partial": "896 из 1000"
+      "share_A": 46.6,
+      "method": "prompt"
     },
     "goldfish-bak": {
       "all": {
@@ -288,6 +287,30 @@
     }
   },
   "mt/phrasebook-v1/ru-ba": {
+    "gigachat-2-max": {
+      "chrF++": {
+        "metric": "chrF++",
+        "value": 38.325225426472976,
+        "ci_low": 35.13969633015673,
+        "ci_high": 41.53896332148085,
+        "n": 256
+      },
+      "BLEU": {
+        "metric": "BLEU",
+        "value": 10.304124621779028,
+        "ci_low": 7.488496861945592,
+        "ci_high": 12.980538301715567,
+        "n": 256
+      },
+      "chrF++_clean": {
+        "metric": "chrF++",
+        "value": 39.596667670708975,
+        "ci_low": 36.12890491789632,
+        "ci_high": 43.022934430521424,
+        "n": 207
+      },
+      "partial": "256 из 1244"
+    },
     "nllb-200-distilled-600M-ct2int8": {
       "chrF++": {
         "metric": "chrF++",
