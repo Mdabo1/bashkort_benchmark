@@ -57,6 +57,7 @@ class GigaChat(OpenAICompatible):
     OAUTH = "https://ngw.devices.sberbank.ru:9443/api/v2/oauth"
 
     def __init__(self, model: str = "GigaChat-2-Max", scope: str = "GIGACHAT_API_PERS", **kw):
+        kw.setdefault("workers", 1)  # бесплатный Freemium-режим — один поток
         super().__init__(name=model.lower(), model=model, base_url="https://gigachat.devices.sberbank.ru/api/v1", **kw)
         self.scope = scope
         self._token, self._exp = None, 0.0
@@ -68,6 +69,12 @@ class GigaChat(OpenAICompatible):
         return ssl.create_default_context(cafile=ca) if ca else None
 
     def _headers(self):
+        import os
+
+        # Готовый токен (живёт 30 минут) — когда OAuth-сервер на порту 9443 недоступен из сети,
+        # где идёт прогон: токен получают на другой машине и передают в GIGACHAT_ACCESS_TOKEN.
+        if os.environ.get("GIGACHAT_ACCESS_TOKEN"):
+            return {"Content-Type": "application/json", "Authorization": f"Bearer {os.environ['GIGACHAT_ACCESS_TOKEN']}"}
         if time.time() > self._exp - 60:
             req = urllib.request.Request(self.OAUTH, data=urllib.parse.urlencode({"scope": self.scope}).encode(),
                                          headers={"Authorization": f"Basic {env('GIGACHAT_AUTH_KEY')}",

@@ -25,7 +25,7 @@
 | Перевод | `nllb-200-distilled-600M-ct2int8`, `nllb-200-distilled-1.3B-ct2int8` | то же через CTranslate2 int8: на CPU в разы быстрее |
 | Перевод | `yandex-translate` | `YANDEX_API_KEY`, `YANDEX_FOLDER_ID` |
 | Перевод | `google-translate` | `GOOGLE_API_KEY` |
-| Перевод, LLM | `gigachat-2-max`, `gigachat-2-pro` | `GIGACHAT_AUTH_KEY` (+ `GIGACHAT_CA_BUNDLE` при ошибке сертификата) |
+| Перевод, LLM | `gigachat-2-max`, `gigachat-2-pro` | `GIGACHAT_AUTH_KEY` или готовый `GIGACHAT_ACCESS_TOKEN` (если `ngw.devices.sberbank.ru:9443` недоступен); `GIGACHAT_CA_BUNDLE` — сертификат Минцифры |
 | Перевод, LLM | `yandexgpt`, `yandexgpt-lite` | `YANDEX_API_KEY`, `YANDEX_FOLDER_ID` |
 | Перевод, LLM | `openai:<base_url>\|<model>\|<KEY_ENV>` | любой OpenAI-совместимый сервер: OpenRouter, vLLM и т. п. |
 | LLM | `hf:<model_id>`, `goldfish-bak` | открытые веса, считаются log-вероятности |
