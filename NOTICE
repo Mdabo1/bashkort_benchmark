@@ -1,0 +1,30 @@
+Тестовые наборы этого репозитория построены на открытых данных. При
+распространении наборов или производных от них материалов указывайте источники.
+
+testsets/phrasebook-v1
+  Источник: «Bashkir Trilingual Parallel Phrasebooks», серия Bashkorttele,
+  https://huggingface.co/datasets/bashkorttele/trilingual-parallel-phrasebooks-bgpu
+  Публикатор набора: АНО «Фонд сохранения и развития башкирского языка», https://bsfond.ru/
+  Правообладатель исходного материала: ФГБОУ ВО «БГПУ им. М. Акмуллы», https://bspu.ru/
+  Лицензия: CC BY 4.0, https://creativecommons.org/licenses/by/4.0/
+  Использована исправленная редакция (OCR): failed09/bashkir-multilingual-phrasebooks
+  (CDLA-Permissive-2.0). Изменения в этом репозитории: отбор фраз и удаление повторов.
+
+testsets/orth-pairs-v1
+  Источник предложений: «Bashkir Periodicals — Respublika Bashkortostan Publishing House»,
+  серия Bashkorttele, https://huggingface.co/datasets/bashkorttele/periodicals-izddom
+  Публикатор набора: АНО «Фонд сохранения и развития башкирского языка», https://bsfond.ru/
+  Правообладатель исходного материала: АО ИД «Республика Башкортостан», https://rbsmi.ru/
+  Лицензия: CC BY 4.0. Изменения: отбор предложений и автоматическое внесение ошибок
+  (вторая половина каждой пары намеренно содержит ошибку).
+
+testsets/broadcast-spont-v1
+  Источник аудио: «Bashkir Broadcast Speech — Radio and Television», серия Bashkorttele,
+  https://huggingface.co/datasets/bashkorttele/broadcast-speech
+  Лицензия: CDLA-Permissive-2.0, https://cdla.dev/permissive-2-0/
+  В репозитории хранятся только границы фрагментов и расшифровки; аудио скачивается
+  скриптом. Расшифровки, сделанные для бенчмарка, распространяются на условиях
+  CDLA-Permissive-2.0.
+
+testsets/flores200-*  (не хранится в репозитории)
+  FLORES-200, Meta AI, CC BY-SA 4.0, https://github.com/facebookresearch/flores

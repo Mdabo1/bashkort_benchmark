@@ -1,0 +1,26 @@
+[project]
+name = "bashbench"
+version = "0.1.0"
+description = "Открытый бенчмарк ИИ-систем для башкирского языка: перевод, распознавание речи, грамотность LLM"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+  "numpy",
+  "sacrebleu>=2.4",
+  "jiwer>=3",
+  "pyarrow",
+  "soundfile",
+  "librosa",
+]
+
+[project.optional-dependencies]
+models = ["torch", "transformers>=4.45", "sentencepiece", "onnx-asr[cpu,hub]>=0.12,<0.13"]
+lid = ["fasttext-wheel"]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+include = ["bashbench*"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"

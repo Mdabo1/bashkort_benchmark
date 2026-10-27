@@ -1,0 +1,13 @@
+{
+  "system": {
+    "name": "bak_cyrl_full",
+    "model": "goldfish-models/bak_cyrl_full",
+    "device": "cpu"
+  },
+  "testset": "orth-pairs-v1",
+  "task": "choice",
+  "testset_sha": "350a0976476fe6d2",
+  "bashbench_rev": "unknown",
+  "started": "2026-10-27T10:49:21+00:00",
+  "finished": "2026-10-27T10:54:51+00:00"
+}

@@ -1,0 +1,7 @@
+{
+  "testset": "flores200-devtest",
+  "n": 1012,
+  "ba_exact_in_corpus": 0,
+  "ru_exact_in_corpus": 0,
+  "corpus": "AigizK/bashkir-russian-parallel-corpora@0cddd5ffe7fffa8e23fd64a94a52429668513bbc"
+}

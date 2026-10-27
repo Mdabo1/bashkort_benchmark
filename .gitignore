@@ -1,0 +1,10 @@
+.cache/
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+# FLORES (CC BY-SA) и Common Voice собираются локально скриптом
+testsets/flores200-*/data.jsonl
+testsets/cv25-test/data.jsonl
+# пакеты для разметчиков содержат аудио и ключи систем
+human_eval/packages/

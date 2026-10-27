@@ -1,0 +1,7 @@
+{
+  "testset": "phrasebook-v1",
+  "n": 1244,
+  "ba_exact_in_corpus": 122,
+  "ru_exact_in_corpus": 138,
+  "corpus": "AigizK/bashkir-russian-parallel-corpora@0cddd5ffe7fffa8e23fd64a94a52429668513bbc"
+}

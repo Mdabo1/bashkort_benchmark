@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Башкирский бенчмарк: разметка</title>
+<style>
+:root {
+  --bg: #fafaf7; --fg: #1d1d1b; --muted: #6b6b66; --card: #ffffff; --line: #e2e1da;
+  --accent: #2f6f4f; --accent-fg: #ffffff; --warn: #a2461d; --sel: #e3efe8;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #161715; --fg: #ecebe6; --muted: #a09f98; --card: #1f201d; --line: #33342f;
+          --accent: #6fbf94; --accent-fg: #0f1a14; --warn: #e48b5d; --sel: #23362b; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 860px; margin: 0 auto; padding: 16px; }
+h1 { font-size: 1.3rem; margin: 8px 0 4px; }
+.muted { color: var(--muted); font-size: .9rem; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; margin: 12px 0; }
+label { display: block; margin: 6px 0; }
+input[type=text], textarea { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--bg); color: var(--fg); font: inherit; }
+textarea { min-height: 110px; font-size: 1.1rem; }
+button { font: inherit; padding: 7px 14px; border-radius: 8px; border: 1px solid var(--line); background: var(--card);
+  color: var(--fg); cursor: pointer; }
+button.primary { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+button:disabled { opacity: .45; cursor: default; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.spacer { flex: 1; }
+.scale { display: flex; gap: 6px; flex-wrap: wrap; margin: 4px 0 10px; }
+.scale button { min-width: 44px; }
+.scale button.on { background: var(--accent); color: var(--accent-fg); border-color: var(--accent); }
+.src { font-size: 1.05rem; white-space: pre-wrap; }
+.out { font-size: 1.1rem; white-space: pre-wrap; margin: 6px 0 10px; }
+.flags { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .92rem; }
+.flags label { display: inline-flex; gap: 6px; align-items: center; margin: 0; }
+.progress { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; margin: 8px 0; }
+.progress > div { height: 100%; background: var(--accent); width: 0; }
+details summary { cursor: pointer; color: var(--muted); }
+.hidden { display: none; }
+.tag { display: inline-block; padding: 1px 8px; border-radius: 10px; background: var(--sel); font-size: .85rem; }
+audio { width: 100%; margin: 8px 0; }
+kbd { border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; font-size: .85em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Башкирский бенчмарк: разметка</h1>
+  <div class="muted">Работает без интернета, всё хранится в этом браузере. Когда закончите, нажмите «Сохранить файл» и отправьте его организатору.</div>
+
+  <section id="setup" class="card">
+    <label>Ваше имя или псевдоним (латиницей, без пробелов)
+      <input type="text" id="annotator" placeholder="aigul_k" autocomplete="off">
+    </label>
+    <label>Папка пакета (manifest.json и, для речи, clips/)
+      <input type="file" id="folder" webkitdirectory multiple>
+    </label>
+    <div class="muted">Если выбор папки не работает, выберите сразу все файлы пакета:
+      <input type="file" id="files" multiple></div>
+    <p id="setupErr" class="muted" style="color:var(--warn)"></p>
+    <details>
+      <summary>Инструкция</summary>
+      <div id="guide"></div>
+    </details>
+  </section>
+
+  <section id="work" class="hidden">
+    <div class="row">
+      <span class="tag" id="pkgName"></span>
+      <span class="muted" id="counter"></span>
+      <span class="spacer"></span>
+      <button id="exportBtn" class="primary">Сохранить файл</button>
+    </div>
+    <div class="progress"><div id="bar"></div></div>
+    <div id="item"></div>
+    <div class="row">
+      <button id="prev">← Назад</button>
+      <span class="spacer"></span>
+      <button id="nextEmpty">К неразмеченному</button>
+      <button id="next" class="primary">Дальше →</button>
+    </div>
+    <p class="muted">Клавиши: <kbd>Alt</kbd>+<kbd>→</kbd>/<kbd>←</kbd> — следующее/предыдущее; в расшифровке <kbd>Ctrl</kbd>+<kbd>Пробел</kbd> — пауза/воспроизведение, <kbd>Ctrl</kbd>+<kbd>↩</kbd> — сохранить и дальше.</p>
+  </section>
+</main>
+
+<script>
+const GUIDE_RATE = `
+<p><b>Что оценивать.</b> Вверху — задание или исходный текст. Ниже — несколько ответов разных систем в случайном порядке. Названия систем скрыты. Оценивайте каждый ответ отдельно, не сравнивая с остальными.</p>
+<p><b>Грамотность</b> (только язык, не смысл):<br>
+5 — как написал бы грамотный носитель, ошибок нет;<br>
+4 — одна-две мелкие ошибки (буква, окончание), читается естественно;<br>
+3 — заметные ошибки или неестественные обороты, но это башкирский текст;<br>
+2 — много ошибок, калька с русского, смесь с татарским или казахским;<br>
+1 — не башкирский язык или нечитаемо.</p>
+<p><b>Смысл:</b> для перевода — передан ли смысл исходного текста; для задания — выполнено ли оно и нет ли выдумок.<br>
+5 — полностью; 4 — почти, мелкие неточности; 3 — частично; 2 — в основном нет; 1 — совсем нет или ответа нет.</p>
+<p>Флажки ставьте, если явление есть хотя бы раз. Сомневаетесь — ставьте оценку ниже и пишите комментарий.</p>`;
+const GUIDE_TR = `
+<p><b>Задача:</b> записать, что сказано во фрагменте, слово в слово.</p>
+<ul>
+<li>Пишите по правилам башкирской орфографии, с буквами ә ө ү ҡ ғ ҙ ҫ һ ң. Пунктуацию и заглавные буквы можно не ставить: при подсчёте их не учитывают.</li>
+<li>Русские слова пишите по-русски, как произнесены. Числа — словами, как сказаны («ике мең егерме алтынсы йыл»).</li>
+<li>Оговорки и повторы записывайте как есть. Междометия (ы-ы, м-м) не пишите.</li>
+<li>Слово не разобрать — поставьте <b>[?]</b> на его месте. Обрезанное на краю фрагмента слово пишите, если разобрали больше половины.</li>
+<li>Не пользуйтесь распознаванием речи и не смотрите чужие расшифровки: нам нужна независимая запись.</li>
+<li>Если речь почти целиком на русском, звучит только музыка или ничего не разобрать — отметьте флажок «Пропустить».</li>
+</ul>`;
+
+const FLAGS_RATE = [
+  ["ru", "Русские слова без нужды"], ["tt_kk", "Татарские/казахские формы"], ["letters", "Не те буквы (к вместо ҡ и т. п.)"],
+  ["invented", "Несуществующие слова"], ["facts", "Фактические ошибки / выдумки"], ["incomplete", "Ответ оборван"],
+];
+const FLAGS_TR = [["music", "Музыка или шум мешают"], ["overlap", "Говорят одновременно"],
+  ["russian", "Много русского"], ["dialect", "Диалект / говор"]];
+
+let pkg = null, files = {}, idx = 0, state = {}, annotator = "";
+const $ = id => document.getElementById(id);
+const storeKey = () => `bashbench:${pkg.package}:${annotator}`;
+function save() { try { localStorage.setItem(storeKey(), JSON.stringify({ idx, state })); } catch (e) {} }
+function restore() {
+  try { const s = JSON.parse(localStorage.getItem(storeKey()) || "null"); if (s) { idx = s.idx || 0; state = s.state || {}; } } catch (e) {}
+}
+
+$("guide").innerHTML = GUIDE_RATE + "<hr>" + GUIDE_TR;
+for (const inp of [$("folder"), $("files")]) inp.addEventListener("change", async ev => {
+  annotator = $("annotator").value.trim().replace(/\s+/g, "_");
+  if (!annotator) { $("setupErr").textContent = "Сначала впишите имя."; ev.target.value = ""; return; }
+  files = {};
+  for (const f of ev.target.files) {
+    const rel = (f.webkitRelativePath || f.name).split("/");
+    files[rel.length > 1 ? rel.slice(1).join("/") : rel[0]] = f;
+    files[f.name] = files[f.name] || f;
+  }
+  const m = files["manifest.json"];
+  if (!m) { $("setupErr").textContent = "В выбранном нет manifest.json."; return; }
+  pkg = JSON.parse(await m.text());
+  restore();
+  $("setup").classList.add("hidden");
+  $("work").classList.remove("hidden");
+  $("pkgName").textContent = pkg.package;
+  render();
+});
+
+function uidsOf(it) { return pkg.kind === "rate" ? it.outputs.map(o => o.uid) : [it.uid]; }
+function isDone(it) {
+  return uidsOf(it).every(u => { const a = state[u]; return a && (pkg.kind === "rate" ? a.grammar && a.meaning : (a.skip || (a.text || "").trim())); });
+}
+
+function scale(uid, crit) {
+  const wrap = document.createElement("div"); wrap.className = "scale";
+  for (let v = 1; v <= 5; v++) {
+    const b = document.createElement("button"); b.textContent = v;
+    if ((state[uid] || {})[crit] === v) b.classList.add("on");
+    b.onclick = () => { state[uid] = { ...(state[uid] || {}), [crit]: v }; save(); render(); };
+    wrap.appendChild(b);
+  }
+  return wrap;
+}
+function flagBoxes(uid, list) {
+  const d = document.createElement("div"); d.className = "flags";
+  const cur = new Set((state[uid] || {}).flags || []);
+  for (const [k, label] of list) {
+    const l = document.createElement("label"); const c = document.createElement("input"); c.type = "checkbox"; c.checked = cur.has(k);
+    c.onchange = () => { const s = new Set((state[uid] || {}).flags || []); c.checked ? s.add(k) : s.delete(k);
+      state[uid] = { ...(state[uid] || {}), flags: [...s] }; save(); updateCounter(); };
+    l.append(c, label); d.appendChild(l);
+  }
+  return d;
+}
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+let audioUrl = null;
+function render() {
+  const it = pkg.items[idx]; const box = $("item"); box.innerHTML = "";
+  if (pkg.kind === "rate") {
+    const src = el("div", "card");
+    src.append(el("div", "muted", pkg.task && pkg.task.includes("-") ? "Исходный текст" : "Задание"), el("div", "src", it.source));
+    box.appendChild(src);
+    it.outputs.forEach((o, n) => {
+      const c = el("div", "card");
+      c.append(el("div", "muted", `Ответ ${n + 1}`), el("div", "out", o.output || "(пусто)"));
+      c.append(el("div", "muted", "Грамотность"), scale(o.uid, "grammar"), el("div", "muted", "Смысл"), scale(o.uid, "meaning"));
+      c.appendChild(flagBoxes(o.uid, FLAGS_RATE));
+      const note = el("input"); note.type = "text"; note.placeholder = "Комментарий (необязательно)"; note.style.marginTop = "8px";
+      note.value = (state[o.uid] || {}).note || "";
+      note.oninput = () => { state[o.uid] = { ...(state[o.uid] || {}), note: note.value }; save(); };
+      c.appendChild(note); box.appendChild(c);
+    });
+  } else {
+    const c = el("div", "card");
+    c.appendChild(el("div", "muted", `Фрагмент ${it.duration} с`));
+    const au = document.createElement("audio"); au.controls = true; au.id = "player";
+    const f = files[it.audio] || files[it.audio.split("/").pop()];
+    if (audioUrl) URL.revokeObjectURL(audioUrl);
+    if (f) { audioUrl = URL.createObjectURL(f); au.src = audioUrl; } else c.appendChild(el("div", "muted", "Аудиофайл не найден в пакете"));
+    const sp = el("div", "row");
+    for (const r of [0.75, 1, 1.25]) { const b = el("button", null, `×${r}`); b.onclick = () => { au.playbackRate = r; }; sp.appendChild(b); }
+    const ta = document.createElement("textarea"); ta.id = "tr"; ta.lang = "ba"; ta.spellcheck = false;
+    ta.value = (state[it.uid] || {}).text || "";
+    ta.oninput = () => { state[it.uid] = { ...(state[it.uid] || {}), text: ta.value }; save(); updateCounter(); };
+    const skip = el("label"); const sc = document.createElement("input"); sc.type = "checkbox"; sc.checked = !!(state[it.uid] || {}).skip;
+    sc.onchange = () => { state[it.uid] = { ...(state[it.uid] || {}), skip: sc.checked }; save(); updateCounter(); };
+    skip.append(sc, " Пропустить: почти нет башкирской речи или ничего не разобрать");
+    c.append(au, sp, ta, flagBoxes(it.uid, FLAGS_TR), skip);
+    box.appendChild(c);
+    setTimeout(() => ta.focus(), 0);
+  }
+  updateCounter();
+}
+function updateCounter() {
+  const done = pkg.items.filter(isDone).length;
+  $("counter").textContent = `${idx + 1} из ${pkg.items.length} · готово ${done}`;
+  $("bar").style.width = `${100 * done / pkg.items.length}%`;
+  $("prev").disabled = idx === 0; $("next").disabled = idx === pkg.items.length - 1;
+}
+function go(d) { idx = Math.max(0, Math.min(pkg.items.length - 1, idx + d)); save(); render(); window.scrollTo(0, 0); }
+$("prev").onclick = () => go(-1); $("next").onclick = () => go(1);
+$("nextEmpty").onclick = () => { const n = pkg.items.findIndex((it, i) => i > idx && !isDone(it)); const m = n >= 0 ? n : pkg.items.findIndex(it => !isDone(it)); if (m >= 0) { idx = m; save(); render(); } };
+document.addEventListener("keydown", e => {
+  if (!pkg) return;
+  if (e.altKey && e.key === "ArrowRight") { e.preventDefault(); go(1); }
+  if (e.altKey && e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
+  if (pkg.kind === "transcribe" && e.ctrlKey && e.code === "Space") { e.preventDefault(); const p = $("player"); if (p) p.paused ? p.play() : p.pause(); }
+  if (pkg.kind === "transcribe" && e.ctrlKey && e.key === "Enter") { e.preventDefault(); go(1); }
+});
+$("exportBtn").onclick = () => {
+  const out = { package: pkg.package, kind: pkg.kind, testset: pkg.testset, task: pkg.task || "asr", annotator,
+    exported: new Date().toISOString(), annotations: state };
+  const blob = new Blob([JSON.stringify(out, null, 1)], { type: "application/json" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `${pkg.package}__${annotator}.json`; a.click();
+};
+</script>
+</body>
+</html>

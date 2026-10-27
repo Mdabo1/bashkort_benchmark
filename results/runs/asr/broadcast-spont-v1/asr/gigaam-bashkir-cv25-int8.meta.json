@@ -1,0 +1,13 @@
+{
+  "system": {
+    "name": "gigaam-bashkir-cv25-int8",
+    "model": "AigizK/GigaAM-Bashkir-CV25-ONNX",
+    "quantization": "int8"
+  },
+  "testset": "broadcast-spont-v1",
+  "task": "asr",
+  "testset_sha": "51d65d6ae3a69920",
+  "bashbench_rev": "unknown",
+  "started": "2026-10-27T10:42:31+00:00",
+  "finished": "2026-10-27T10:48:35+00:00"
+}
