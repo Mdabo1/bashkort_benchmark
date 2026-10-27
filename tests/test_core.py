@@ -26,6 +26,13 @@ def test_wer_basic():
     assert abs(s.value - 100 / 3) < 1e-6
 
 
+def test_cer_matches_jiwer():
+    import jiwer
+
+    s = metrics.asr_score(["мин мәктәпкә барам"], ["мин мәктәпкә барым"], "char")
+    assert abs(s.value - 100 * jiwer.cer("мин мәктәпкә барым", "мин мәктәпкә барам")) < 1e-9
+
+
 def test_wer_is_corpus_level():
     # корпусный WER = сумма ошибок / сумма слов, а не среднее по записям
     s = metrics.asr_score(["а", "б в г д"], ["х", "б в г д"])

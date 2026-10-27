@@ -76,6 +76,8 @@ def score_all():
     scores = defaultdict(dict)
     for track, testset, task, system, path in _runs():
         rows = read_jsonl(path)
+        if not rows:
+            continue
         if track == "mt":
             s = score_mt(testset, task, rows)
         elif track == "asr":
@@ -85,11 +87,19 @@ def score_all():
         else:
             s = score_gen(rows)
         if s:
+            n_total = len(load_testset(testset))
+            if len(rows) < n_total:
+                s["partial"] = f"{len(rows)} из {n_total}"
             scores[f"{track}/{testset}/{task}"][system] = s
     human = RESULTS / "human" / "summary.json"
     write_json(RESULTS / "scores.json", scores)
     leaderboard(scores, human)
     print(f"→ {RESULTS / 'LEADERBOARD.md'}")
+
+
+def _name(system, *runs):
+    parts = [r["partial"] for r in runs if r and "partial" in r]
+    return f"{system} (частично: {parts[0]})" if parts else system
 
 
 def _ci(s, fmt="{:.1f}"):
@@ -116,7 +126,7 @@ def leaderboard(scores, human_path: Path):
 
         for s in sorted(systems, key=key):
             a, b = scores.get(f"mt/{ts}/ba-ru", {}).get(s), scores.get(f"mt/{ts}/ru-ba", {}).get(s)
-            row = [s, _ci(a["chrF++"]) if a else "—", _ci(b["chrF++"]) if b else "—",
+            row = [_name(s, a, b), _ci(a["chrF++"]) if a else "—", _ci(b["chrF++"]) if b else "—",
                    f"{a['BLEU']['value']:.1f}" if a else "—", f"{b['BLEU']['value']:.1f}" if b else "—"]
             if has_clean:
                 row += [_ci(a["chrF++_clean"]) if a and "chrF++_clean" in a else "—",
@@ -130,7 +140,7 @@ def leaderboard(scores, human_path: Path):
         for k, v in sorted(asr.items()):
             L += [f"### {k.split('/')[1]}", "", "| Система | WER | CER | Записей |", "|---|---|---|---|"]
             for s, m in sorted(v.items(), key=lambda x: x[1]["WER"]["value"]):
-                L.append(f"| {s} | {_ci(m['WER'])} | {_ci(m['CER'])} | {m['WER']['n']} |")
+                L.append(f"| {_name(s, m)} | {_ci(m['WER'])} | {_ci(m['CER'])} | {m['WER']['n']} |")
             L.append("")
 
     ch = scores.get("llm/orth-pairs-v1/choice")
@@ -141,7 +151,7 @@ def leaderboard(scores, human_path: Path):
               "`logprob` — сравнение вероятностей (открытые веса), `prompt` — модель спрашивают, какой вариант верный.", "",
               "| Система | Метод | Все | letters | harmony |", "|---|---|---|---|---|"]
         for s, m in sorted(ch.items(), key=lambda x: -x[1]["all"]["value"]):
-            L.append(f"| {s} | {m['method']} | {_ci(m['all'])} | {_ci(m['letters']) if 'letters' in m else '—'} | "
+            L.append(f"| {_name(s, m)} | {m['method']} | {_ci(m['all'])} | {_ci(m['letters']) if 'letters' in m else '—'} | "
                      f"{_ci(m['harmony']) if 'harmony' in m else '—'} |")
         L.append("")
 
@@ -155,7 +165,7 @@ def leaderboard(scores, human_path: Path):
               "| Система | По-башкирски, % | Слова с башкирскими буквами, % | Чужие буквы, % | Нет в корпусе, % | Медиана слов |",
               "|---|---|---|---|---|---|"]
         for s, m in sorted(gen.items(), key=lambda x: -x[1]["lang_ba"]):
-            L.append(f"| {s} | {m['lang_ba']:.0f} | {m['bashkir_letter_words']:.0f} | {m['foreign_letter_words']:.1f} | "
+            L.append(f"| {_name(s, m)} | {m['lang_ba']:.0f} | {m['bashkir_letter_words']:.0f} | {m['foreign_letter_words']:.1f} | "
                      f"{m['oov_words']:.0f} | {m['median_words']:.0f} |")
         L.append("")
 

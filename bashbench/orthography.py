@@ -40,8 +40,9 @@ def language(text: str) -> tuple[str, float]:
     t = " ".join(text.split())
     if not t:
         return "none", 0.0
-    labels, probs = _lid().predict(t, k=1)
-    return labels[0].replace("__label__", ""), float(probs[0])
+    # FastText.predict ломается на numpy 2 (np.array(copy=False)), поэтому зовём нижний уровень
+    (prob, label), = _lid().f.predict(t + "\n", 1, 0.0, "strict")
+    return label.replace("__label__", ""), float(prob)
 
 
 def analyze(text: str) -> dict:
