@@ -1,4 +1,20 @@
 {
+  "llm/gen-v1/gen": {
+    "yandexgpt-lite": {
+      "bashkir_letter_words": 78.4258116695531,
+      "foreign_letter_words": 0.16672821344827446,
+      "non_alphabet_words": 0.16672821344827446,
+      "oov_words": 24.01198541862204,
+      "latin_words": 0.07383388137863842,
+      "lang_ba": 94.64285714285714,
+      "lang_other": {
+        "tt": 2,
+        "ru": 1
+      },
+      "median_words": 54.5,
+      "n": 56
+    }
+  },
   "llm/orth-pairs-v1/choice": {
     "goldfish-bak": {
       "all": {
@@ -107,6 +123,29 @@
         "ci_high": 63.5071794262018,
         "n": 1122
       }
+    },
+    "yandex-translate": {
+      "chrF++": {
+        "metric": "chrF++",
+        "value": 69.76906732484916,
+        "ci_low": 68.1785297389828,
+        "ci_high": 71.16729940275376,
+        "n": 1244
+      },
+      "BLEU": {
+        "metric": "BLEU",
+        "value": 50.61590443032427,
+        "ci_low": 48.16902554644439,
+        "ci_high": 52.87677044831797,
+        "n": 1244
+      },
+      "chrF++_clean": {
+        "metric": "chrF++",
+        "value": 69.62798280780278,
+        "ci_low": 68.04602929758313,
+        "ci_high": 71.1802254151603,
+        "n": 1122
+      }
     }
   },
   "mt/phrasebook-v1/ru-ba": {
@@ -153,6 +192,29 @@
         "value": 57.11429465263203,
         "ci_low": 55.59785358967294,
         "ci_high": 58.708453477639836,
+        "n": 1106
+      }
+    },
+    "yandex-translate": {
+      "chrF++": {
+        "metric": "chrF++",
+        "value": 62.125280278118375,
+        "ci_low": 60.695172013008175,
+        "ci_high": 63.597144967282404,
+        "n": 1244
+      },
+      "BLEU": {
+        "metric": "BLEU",
+        "value": 36.75858080458625,
+        "ci_low": 34.54309119249207,
+        "ci_high": 39.009038292540566,
+        "n": 1244
+      },
+      "chrF++_clean": {
+        "metric": "chrF++",
+        "value": 62.12452996311809,
+        "ci_low": 60.66005821981208,
+        "ci_high": 63.63877228045427,
         "n": 1106
       }
     }

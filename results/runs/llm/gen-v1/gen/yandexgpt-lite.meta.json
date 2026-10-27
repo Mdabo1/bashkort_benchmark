@@ -1,0 +1,14 @@
+{
+  "system": {
+    "name": "yandexgpt-lite",
+    "model": "gpt://<folder>/yandexgpt-lite/latest",
+    "base_url": "https://llm.api.cloud.yandex.net/v1",
+    "temperature": 0.0
+  },
+  "testset": "gen-v1",
+  "task": "gen",
+  "testset_sha": "e040b43a0648b3fa",
+  "bashbench_rev": "7cd03a6",
+  "started": "2026-10-27T11:47:02+00:00",
+  "finished": "2026-10-27T11:48:51+00:00"
+}

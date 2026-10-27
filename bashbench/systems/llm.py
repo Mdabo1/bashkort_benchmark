@@ -40,7 +40,11 @@ class OpenAICompatible(LLMSystem):
             return list(ex.map(lambda p: self._one(p, system, max_tokens), prompts))
 
     def info(self):
-        return {"name": self.name, "model": self.model, "base_url": self.base_url, "temperature": self.temperature}
+        import re
+
+        # ID каталога Yandex Cloud в результатах не публикуем
+        model = re.sub(r"^gpt://[^/]+/", "gpt://<folder>/", self.model)
+        return {"name": self.name, "model": model, "base_url": self.base_url, "temperature": self.temperature}
 
 
 class GigaChat(OpenAICompatible):
