@@ -148,6 +148,23 @@
     }
   },
   "mt/flores200-devtest/ba-ru": {
+    "gigachat-2-max": {
+      "chrF++": {
+        "metric": "chrF++",
+        "value": 43.68172346529096,
+        "ci_low": 42.89002591796599,
+        "ci_high": 44.408179699120666,
+        "n": 896
+      },
+      "BLEU": {
+        "metric": "BLEU",
+        "value": 15.583263945193892,
+        "ci_low": 14.602876547361891,
+        "ci_high": 16.501282462593952,
+        "n": 896
+      },
+      "partial": "896 из 1012"
+    },
     "nllb-200-distilled-600M-ct2int8": {
       "chrF++": {
         "metric": "chrF++",
