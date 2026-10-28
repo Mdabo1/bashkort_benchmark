@@ -1,0 +1,15 @@
+{
+  "system": {
+    "name": "gigachat-2-max",
+    "model": "GigaChat-2-Max",
+    "base_url": "https://gigachat.devices.sberbank.ru/api/v1",
+    "temperature": 0.0,
+    "prompt": "Переведи текст с языка «{src}» на язык «{tgt}». Выведи только перевод, без пояснений, кавычек и транслитерации.\n\nТекст: {text}"
+  },
+  "testset": "flores200-devtest",
+  "task": "ba-ru",
+  "testset_sha": "7f484b6ba4f5b950",
+  "bashbench_rev": "40e4d78",
+  "started": "2026-10-28T05:58:08+00:00",
+  "finished": "2026-10-28T06:01:45+00:00"
+}
